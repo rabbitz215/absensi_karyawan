@@ -12,7 +12,7 @@
         Export
     </button>
 
-    <table class="table">
+    <table class="table table-responsive">
         <thead>
             <tr>
                 <th>No</th>

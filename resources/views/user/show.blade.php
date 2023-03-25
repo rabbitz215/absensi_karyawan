@@ -12,8 +12,8 @@
     <p class="font-weight-bold">Department : {{ $user->department->name }}</p>
     <a href="{{ route('absensi.exportByUser', $user->id) }}" class="btn btn-primary mb-2"><i class="fas fa-file-export"></i>
         Export to Excel</a>
-    <div class="table-responsive">
-        <table class="table" id="dataTable" width="100%" cellspacing="0">
+    <div>
+        <table class="table table-responsive" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>No</th>

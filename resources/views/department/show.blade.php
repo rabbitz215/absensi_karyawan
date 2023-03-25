@@ -10,9 +10,9 @@
     <p class="font-weight-bold">Department Description : {{ $department->description }}</p>
 
     <div class="card mt-4">
-        <div class="card-body table-responsive">
+        <div class="card-body">
             <p><b>Total Karyawan : {{ $usersByDepartment->count() }}</b></p>
-            <table class="table table-stripped">
+            <table class="table table-responsive table-stripped">
                 <thead>
                     <tr>
                         <th>No</th>
