@@ -12,28 +12,30 @@
     <div class="card mt-4">
         <div class="card-body">
             <p><b>Total Karyawan : {{ $usersByDepartment->count() }}</b></p>
-            <table class="table table-responsive table-stripped">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>No Telp</th>
-                        <th>Jabatan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($usersByDepartment as $user)
+            <div class="table-responsive">
+                <table class="table table-stripped">
+                    <thead>
                         <tr>
-                            <td scope="row">{{ $loop->iteration }}</td>
-                            <td>{{ $user->full_name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->no_telp }}</td>
-                            <td>{{ $user->jabatan }}</td>
+                            <th>No</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>No Telp</th>
+                            <th>Jabatan</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($usersByDepartment as $user)
+                            <tr>
+                                <td scope="row">{{ $loop->iteration }}</td>
+                                <td>{{ $user->full_name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->no_telp }}</td>
+                                <td>{{ $user->jabatan }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
             {{ $usersByDepartment->links() }}
         </div>

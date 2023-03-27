@@ -28,7 +28,7 @@ class EditUserRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'required|email',
             'password' => 'nullable|min:8',
-            'no_telp' => 'required|min:1|max:255|numeric',
+            'no_telp' => 'required|min:1|numeric',
             'jabatan' => 'required|min:1|max:255',
         ];
     }
