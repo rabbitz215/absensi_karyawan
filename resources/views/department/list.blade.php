@@ -16,40 +16,42 @@
         </div>
     @endif
 
-    <table class="table table-responsive table-bordered table-stripped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Department Name</th>
-                <th>Total Karyawan</th>
-                <th>#</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($departments as $department)
+    <div class="table-responsive">
+        <table class="table table-bordered table-stripped">
+            <thead>
                 <tr>
-                    <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ $department->name }}</td>
-                    <td>{{ $department->users_count }}</td>
-                    <td>
-                        <div class="d-flex">
-                            <a href="{{ route('department.show', $department->id) }}"
-                                class="btn btn-sm btn-secondary mr-2"><i class="fas fa-eye"></i></a>
-                            <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary mr-2"><i
-                                    class="fas fa-edit"></i></a>
-                            <form action="{{ route('department.destroy', $department->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Are you sure to delete this?')"><i
-                                        class="fas fa-trash"></i></button>
-                            </form>
-                        </div>
-                    </td>
+                    <th>No</th>
+                    <th>Department Name</th>
+                    <th>Total Karyawan</th>
+                    <th>#</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($departments as $department)
+                    <tr>
+                        <td scope="row">{{ $loop->iteration }}</td>
+                        <td>{{ $department->name }}</td>
+                        <td>{{ $department->users_count }}</td>
+                        <td>
+                            <div class="d-flex">
+                                <a href="{{ route('department.show', $department->id) }}"
+                                    class="btn btn-sm btn-secondary mr-2"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('department.edit', $department->id) }}"
+                                    class="btn btn-sm btn-primary mr-2"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('department.destroy', $department->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Are you sure to delete this?')"><i
+                                            class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     <div class="modal fade" id="newDepartment" tabindex="-1" role="dialog" aria-labelledby="newDepartmentModalLabel"
         aria-hidden="true">

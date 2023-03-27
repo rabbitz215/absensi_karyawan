@@ -12,52 +12,54 @@
         Export
     </button>
 
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Karyawan</th>
-                <th>Jam Absen Masuk</th>
-                <th>Status Absen Masuk</th>
-                <th>Jam Absen Pulang</th>
-                <th>Total Waktu Kerja</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-                @php
-                    $absen = $absensi->where('user_id', $user->id)->first();
-                @endphp
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $absen && $absen->jam_absensi_masuk !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $absen->jam_absensi_masuk)->format('H:i:s') : '-' }}
-                    </td>
-                    <td>
-                        <a
-                            class="text-decoration-none font-weight-bold {{ $absen ? ($absen->status_absensi_masuk == 'Telat' ? 'text-danger' : ($absen->status_absensi_masuk == 'Telat Toleransi' ? 'text-warning' : '')) : 'text-secondary' }}">
-                            {{ $absen ? $absen->status_absensi_masuk : '-' }}
-                        </a>
-                    </td>
-                    <td>{{ $absen && $absen->jam_absensi_pulang !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $absen->jam_absensi_pulang)->format('H:i:s') : '-' }}
-                    </td>
-                    @if ($absen && $absen->jam_absensi_pulang !== null)
-                        <td>
-                            @php
-                                $totalSeconds = strtotime($absen->jam_absensi_pulang) - strtotime($absen->jam_absensi_masuk);
-                                $totalHours = floor($totalSeconds / 3600);
-                                $totalMinutes = floor(($totalSeconds / 60) % 60);
-                                $totalSeconds = $totalSeconds % 60;
-                            @endphp
-                            {{ $totalHours }} Jam {{ $totalMinutes }} Menit {{ $totalSeconds }} Detik
-                        </td>
-                    @else
-                        <td>-</td>
-                    @endif
+                    <th>No</th>
+                    <th>Nama Karyawan</th>
+                    <th>Jam Absen Masuk</th>
+                    <th>Status Absen Masuk</th>
+                    <th>Jam Absen Pulang</th>
+                    <th>Total Waktu Kerja</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                    @php
+                        $absen = $absensi->where('user_id', $user->id)->first();
+                    @endphp
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $absen && $absen->jam_absensi_masuk !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $absen->jam_absensi_masuk)->format('H:i:s') : '-' }}
+                        </td>
+                        <td>
+                            <a
+                                class="text-decoration-none font-weight-bold {{ $absen ? ($absen->status_absensi_masuk == 'Telat' ? 'text-danger' : ($absen->status_absensi_masuk == 'Telat Toleransi' ? 'text-warning' : '')) : 'text-secondary' }}">
+                                {{ $absen ? $absen->status_absensi_masuk : '-' }}
+                            </a>
+                        </td>
+                        <td>{{ $absen && $absen->jam_absensi_pulang !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $absen->jam_absensi_pulang)->format('H:i:s') : '-' }}
+                        </td>
+                        @if ($absen && $absen->jam_absensi_pulang !== null)
+                            <td>
+                                @php
+                                    $totalSeconds = strtotime($absen->jam_absensi_pulang) - strtotime($absen->jam_absensi_masuk);
+                                    $totalHours = floor($totalSeconds / 3600);
+                                    $totalMinutes = floor(($totalSeconds / 60) % 60);
+                                    $totalSeconds = $totalSeconds % 60;
+                                @endphp
+                                {{ $totalHours }} Jam {{ $totalMinutes }} Menit {{ $totalSeconds }} Detik
+                            </td>
+                        @else
+                            <td>-</td>
+                        @endif
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel"
         aria-hidden="true">

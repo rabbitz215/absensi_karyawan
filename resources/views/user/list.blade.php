@@ -16,8 +16,8 @@
         </div>
     @endif
 
-    <div>
-        <table class="table table-responsive" id="dataTable" width="100%" cellspacing="0">
+    <div class="table-responsive">
+        <table class="table" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>No</th>
