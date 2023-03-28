@@ -30,9 +30,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($users as $index => $user)
+                    @php
+                        $iteration = ($users->currentPage() - 1) * $users->perPage() + $index + 1;
+                    @endphp
                     <tr>
-                        <td scope="row">{{ $loop->iteration }}</td>
+                        <td scope="row">{{ $iteration }}</td>
                         <td>{{ $user->full_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->no_telp }}</td>

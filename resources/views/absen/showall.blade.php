@@ -25,12 +25,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($users as $index => $user)
                     @php
                         $absen = $absensi->where('user_id', $user->id)->first();
+                        $iteration = ($users->currentPage() - 1) * $users->perPage() + $index + 1;
                     @endphp
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $iteration }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $absen && $absen->jam_absensi_masuk !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $absen->jam_absensi_masuk)->format('H:i:s') : '-' }}
                         </td>
@@ -59,6 +60,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $users->links() }}
     </div>
 
     <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel"

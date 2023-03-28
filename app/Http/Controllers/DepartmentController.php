@@ -51,8 +51,9 @@ class DepartmentController extends Controller
         $titleTab = 'Department ' . $department->name;
         $title = 'List Karyawan Department ' . $department->name;
         $usersByDepartment = User::where('department_id', $department->id)->paginate(10);
+        $count = User::where('department_id', $department->id)->count();
 
-        return view('department.show', compact('usersByDepartment', 'title', 'titleTab', 'department'));
+        return view('department.show', compact('usersByDepartment', 'title', 'titleTab', 'department', 'count'));
     }
 
     /**

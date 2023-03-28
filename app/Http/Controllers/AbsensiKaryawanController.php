@@ -77,7 +77,7 @@ class AbsensiKaryawanController extends Controller
         $date = $request->input('date', Carbon::today()->format('Y-m-d'));
 
         $titleTab = 'Rekap Absensi';
-        $users = User::all();
+        $users = User::paginate(10);
         $absensi = AbsensiKaryawan::whereIn('user_id', $users->pluck('id'))
             ->whereDate('created_at', $date)
             ->get();

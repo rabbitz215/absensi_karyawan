@@ -13,51 +13,57 @@
     <a href="{{ route('absensi.exportByUser', $user->id) }}" class="btn btn-primary mb-2"><i class="fas fa-file-export"></i>
         Export to Excel</a>
     <div>
-        <table class="table table-responsive" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Hari</th>
-                    <th>Tanggal</th>
-                    <th>Jam Absen Masuk</th>
-                    <th>Status Absen Masuk</th>
-                    <th>Jam Absen Pulang</th>
-                    <th>Total Waktu Kerja</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($recaps as $item)
+        <div class="table-responsive">
+            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                <thead>
                     <tr>
-                        <td scope="row">{{ $loop->iteration }}</td>
-                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('l') }}</td>
-                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d-m-Y') }}</td>
-                        <td>{{ $item->jam_absensi_masuk !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->jam_absensi_masuk)->format('H:i:s') : '-' }}
-                        </td>
-                        <td>
-                            <a
-                                class="text-decoration-none font-weight-bold {{ $item->status_absensi_masuk == 'Telat' ? 'text-danger' : 'text-success' }}">
-                                {{ $item->status_absensi_masuk }}
-                            </a>
-                        </td>
-                        <td>{{ $item->jam_absensi_pulang !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->jam_absensi_pulang)->format('H:i:s') : '-' }}
-                        </td>
-                        @if ($recaps && $item->jam_absensi_pulang !== null)
-                            <td>
-                                @php
-                                    $totalSeconds = strtotime($item->jam_absensi_pulang) - strtotime($item->jam_absensi_masuk);
-                                    $totalHours = floor($totalSeconds / 3600);
-                                    $totalMinutes = floor(($totalSeconds / 60) % 60);
-                                    $totalSeconds = $totalSeconds % 60;
-                                @endphp
-                                {{ $totalHours }} Jam {{ $totalMinutes }} Menit {{ $totalSeconds }} Detik
-                            </td>
-                        @else
-                            <td>-</td>
-                        @endif
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Tanggal</th>
+                        <th>Jam Absen Masuk</th>
+                        <th>Status Absen Masuk</th>
+                        <th>Jam Absen Pulang</th>
+                        <th>Total Waktu Kerja</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($recaps as $index => $item)
+                        @php
+                            $iteration = ($recaps->currentPage() - 1) * $recaps->perPage() + $index + 1;
+                        @endphp
+                        <tr>
+                            <td scope="row">{{ $iteration }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('l') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d-m-Y') }}
+                            </td>
+                            <td>{{ $item->jam_absensi_masuk !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->jam_absensi_masuk)->format('H:i:s') : '-' }}
+                            </td>
+                            <td>
+                                <a
+                                    class="text-decoration-none font-weight-bold {{ $item->status_absensi_masuk == 'Telat' ? 'text-danger' : 'text-success' }}">
+                                    {{ $item->status_absensi_masuk }}
+                                </a>
+                            </td>
+                            <td>{{ $item->jam_absensi_pulang !== null ? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->jam_absensi_pulang)->format('H:i:s') : '-' }}
+                            </td>
+                            @if ($recaps && $item->jam_absensi_pulang !== null)
+                                <td>
+                                    @php
+                                        $totalSeconds = strtotime($item->jam_absensi_pulang) - strtotime($item->jam_absensi_masuk);
+                                        $totalHours = floor($totalSeconds / 3600);
+                                        $totalMinutes = floor(($totalSeconds / 60) % 60);
+                                        $totalSeconds = $totalSeconds % 60;
+                                    @endphp
+                                    {{ $totalHours }} Jam {{ $totalMinutes }} Menit {{ $totalSeconds }} Detik
+                                </td>
+                            @else
+                                <td>-</td>
+                            @endif
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {{ $recaps->links() }}

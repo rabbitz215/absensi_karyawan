@@ -11,7 +11,7 @@
 
     <div class="card mt-4">
         <div class="card-body">
-            <p><b>Total Karyawan : {{ $usersByDepartment->count() }}</b></p>
+            <p><b>Total Karyawan : {{ $count }}</b></p>
             <div class="table-responsive">
                 <table class="table table-stripped">
                     <thead>
@@ -24,9 +24,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($usersByDepartment as $user)
+                        @foreach ($usersByDepartment as $index => $user)
+                            @php
+                                $iteration = ($usersByDepartment->currentPage() - 1) * $usersByDepartment->perPage() + $index + 1;
+                            @endphp
                             <tr>
-                                <td scope="row">{{ $loop->iteration }}</td>
+                                <td scope="row">{{ $iteration }}</td>
                                 <td>{{ $user->full_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->no_telp }}</td>

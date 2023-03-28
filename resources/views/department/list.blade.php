@@ -27,9 +27,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($departments as $department)
+                @foreach ($departments as $index => $department)
+                    @php
+                        $iteration = ($departments->currentPage() - 1) * $departments->perPage() + $index + 1;
+                    @endphp
                     <tr>
-                        <td scope="row">{{ $loop->iteration }}</td>
+                        <td scope="row">{{ $iteration }}</td>
                         <td>{{ $department->name }}</td>
                         <td>{{ $department->users_count }}</td>
                         <td>
